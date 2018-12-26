@@ -19,6 +19,7 @@ public class TestJsoup {
     	 Linkdb e=new Linkdb();
     	 TestJsoup t = new TestJsoup();
     	 e.connectToAccess();
+    	 String time=e.Time_get();
          Document doc = t.getDocument("https://s.weibo.com/top/summary?cate=realtimehot");
          Elements elements1 = doc.select("[class=data]");
          Elements elements2 = elements1.select("tbody");
@@ -28,8 +29,8 @@ public class TestJsoup {
          String Search[]=new String[51];//搜索度统计数组
          String List[]=new String[51];//整理数组
          for(int i = 0;i<=50;i++) {collect[i] = elements4.get(i).text();List[i]=collect[i].replaceAll("\'", " ");}//单引号不能替换
-         e.alter_l(); //新建时间字段
-         e.alter_t();
+         e.alter_l(time); //新建时间字段
+         e.alter_t(time);
          for(int i = 0;i<=50;i++) {
         	 if(i==0) {
         		 e.insert_Top(List[i]);
@@ -38,15 +39,15 @@ public class TestJsoup {
         		 int a=e.select(List[i].substring(0,List[i].lastIndexOf(" ")));//基础查询语句 判断是否存在该关键词
         		if(a==0) {
         			 Search[i]=List[i].substring(List[i].lastIndexOf(" "));//提取搜索量;
-        			 e.insert_List_new(List[i].substring(0,List[i].lastIndexOf(" ")),Search[i]);//插入关键词记录及搜索量
+        			 e.insert_List_new(List[i].substring(0,List[i].lastIndexOf(" ")),Search[i],time);//插入关键词记录及搜索量
                      }//输出搜索量  
         		 else {
         			 Search[i]=List[i].substring(List[i].lastIndexOf(" "));//提取搜索量;
-        			 e.insert_List(List[i].substring(0,List[i].lastIndexOf(" ")),Search[i]);
+        			 e.insert_List(List[i].substring(0,List[i].lastIndexOf(" ")),Search[i],time);
         		 }
         			 }
         	 
-        		 
+        		System.out.println("程序成功运行"); 
         	 }
         		 }
         	 

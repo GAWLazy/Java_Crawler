@@ -29,30 +29,18 @@ public class Linkdb {
 		}
 	}
 	
-	public void alter_l() {
-		Date day=new Date();    
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
-		String time=df.format(day);
-		String t_1=time.replace(' ','_');
-		String t_2=t_1.replace(':','_');
-		String t_3=t_2.replace('-', '_');
+	public void alter_l(String k) {
 		try {
-			String sql="ALTER TABLE list add "+t_3+" varchar(10)";
+			String sql="ALTER TABLE list add "+k+" varchar(10)";
 			stmt.execute(sql);
 			}catch(SQLException e){
 				e.printStackTrace();
 			}
 		}
 	
-	public void alter_t() {
-		Date day=new Date();    
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
-		String time=df.format(day);
-		String t_1=time.replace(' ','_');
-		String t_2=t_1.replace(':','_');
-		String t_3=t_2.replace('-', '_');
+	public void alter_t(String k) {
 		try {
-			String sql="ALTER TABLE top add "+t_3+" varchar(10)";
+			String sql="ALTER TABLE top add "+k+" varchar(10)";
 			stmt.execute(sql);
 			}catch(SQLException e){
 				e.printStackTrace();
@@ -75,29 +63,25 @@ public class Linkdb {
 		stmt.executeUpdate(sql);
 	}
 	
-	public void insert_List_new(String i,String j) throws SQLException {
-		this.connectToAccess();
-		Date day=new Date();    
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
-		String time=df.format(day);
-		String t_1=time.replace(' ','_');
-		String t_2=t_1.replace(':','_');
-		String t_3=t_2.replace('-', '_');
+	public void insert_List_new(String i,String j,String k) throws SQLException {
 		stmt=con.createStatement();
-		String sql="insert into list (k,"+t_3+") values ('"+i+"',"+j+")";
+		String sql="insert into list (k,"+k+") values ('"+i+"',"+j+")";
 		stmt.executeUpdate(sql);
 	}
 	
-	public void insert_List(String i,String j) throws SQLException {
+	public void insert_List(String i,String j,String k) throws SQLException {
+		stmt=con.createStatement();
+		String sql="update list set "+k+"="+j+" where k='"+i+"'";
+		System.out.println(sql);
+		stmt.executeUpdate(sql);
+	}
+	public String Time_get(){
 		Date day=new Date();    
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 		String time=df.format(day);
 		String t_1=time.replace(' ','_');
 		String t_2=t_1.replace(':','_');
 		String t_3=t_2.replace('-', '_');
-		stmt=con.createStatement();
-		String sql="update list set "+t_3+"="+j+" where k='"+i+"'";
-		System.out.println(sql);
-		stmt.executeUpdate(sql);
+		return t_3;
 	}
 }
